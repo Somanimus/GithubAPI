@@ -12,19 +12,19 @@
     <header>
        <h1>Github Users</h1> 
        <div class="header-buttons">
-        <button>Search</button>
+        <button class="search-button button" id="result-button">Search</button>
         <button>Favorites</button>
        </div>
     </header>
     <main>
         <h3>Search for Github users</h3>
         <div class="sorter-form">
-            <input type="text">
-            <input type="text">
-            <input type="text">
-            <input type="text">
+            <input type="text" placeholder="search" class="input search-input">
+            <input type="text" class="input sorter-input">
+            <input type="text" class="input order-input">
+            <input type="number" class="input page-num-input">
         </div>
-        <h3>
+        <h3 class="content-headline">
             Results
         </h3>
         <div class="results-container"></div>
@@ -36,6 +36,7 @@
 
     </main>
     <footer>
+
         
     </footer>
     
