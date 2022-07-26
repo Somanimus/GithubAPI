@@ -13,25 +13,37 @@
        <h1>Github Users</h1> 
        <div class="header-buttons">
         <button class="search-button button" id="result-button">Search</button>
-        <button>Favorites</button>
+        <button class="favorites-button button">Favorites</button>
+
        </div>
     </header>
     <main>
-        <h3>Search for Github users</h3>
+        <div class="search-tab-container">
+        <h3 class="main-headline">Search for Github users</h3>
         <div class="sorter-form">
             <input type="text" placeholder="search" class="input search-input">
-            <input type="text" class="input sorter-input">
-            <input type="text" class="input order-input">
-            <input type="number" class="input page-num-input">
+            <select name="sorter" class="sorter-select" id="sorter-select">
+               <option value="repositories">repositories</option>
+               <option value="joined">date</option>
+               <option value="followers">followers</option>
+               <option value="fock">fock</option> 
+            </select>
+            <select name="which way to sort" class="order-select" id="order-select">
+               <option value="asc">ascending</option>
+               <option value="desc">descending</option> 
+            </select>
+            <input type="number" class="input page-num-input" value="10">
         </div>
         <h3 class="content-headline">
             Results
         </h3>
         <div class="results-container"></div>
         <div class="pagination">
-            <button></button>
-            <input type="text">
-            <button></button>
+            <button class="button previous-button">previous</button>
+            <input type="number" class="pagination-input" value="1">
+            <button class="button next-button">next</button>
+
+        </div>
         </div>
 
     </main>

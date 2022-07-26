@@ -20,7 +20,7 @@ header h1{
     margin-right: 50px;
 }
 
-.header-buttons button{
+.button{
     width: 150px;
     height: 24px;
     border: 1px #3D3e40 solid;
@@ -51,6 +51,9 @@ main{
     margin-bottom: 20px;
     margin-left: 50px;
 }
+.main-headline{
+    margin-left: 5%;
+}
 .item-img{
     width: 100px;
     height: 100px;
@@ -68,12 +71,23 @@ main{
     margin-right: 5%;
     margin-left: 50px;
 }
-.sorter-input{
+.sorter-select{
     width: 20%;
     margin-right: 5%;
 
 } 
-.order-input{
+.pagination{
+    position: relative;
+    left: 68%;
+    width: 30%;
+}
+.pagination-input{
+    width: 70px;
+    height: 24px;
+    border: 1px solid #3D3e40 ;
+    border-radius: 5px;
+}
+.order-select{
     width: 20%;
     margin-right: 5%;
 }
