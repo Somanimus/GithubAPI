@@ -145,3 +145,13 @@ gitFetchRequest = async () => {
   return response;
 };
 
+const testBtn = document.querySelector('#test-button');
+const testInput = document.querySelector('#test-input');
+testBtn.addEventListener('click', function() {
+  const localData = [];
+  localData[0] = testInput.value;
+  const storedTestData = JSON.parse(localStorage.getItem('testValue'));
+  storedTestData.push(testInput.value);
+  localStorage.setItem('testValue', JSON.stringify(storedTestData));
+  // localStorage.setItem('testValue', JSON.stringify(localData));
+});
