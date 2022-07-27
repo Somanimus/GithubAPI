@@ -12,7 +12,7 @@
     <header>
        <h1>Github Users</h1> 
        <div class="header-buttons">
-        <button class="search-button button" id="result-button">Search</button>
+        <button class="search-button button btn-selected">Search</button>
         <button class="favorites-button button">Favorites</button>
 
        </div>
@@ -22,17 +22,17 @@
         <h3 class="main-headline">Search for Github users</h3>
         <div class="sorter-form">
             <input type="text" placeholder="search" class="input search-input">
-            <select name="sorter" class="sorter-select" id="sorter-select">
+            <select name="sorter" class="sorter-select" id="sorter-select" value="fock">
                <option value="repositories">repositories</option>
                <option value="joined">date</option>
                <option value="followers">followers</option>
-               <option value="fock">fock</option> 
+               <option value="fock">best option</option> 
             </select>
             <select name="which way to sort" class="order-select" id="order-select">
                <option value="asc">ascending</option>
                <option value="desc">descending</option> 
             </select>
-            <input type="number" class="input page-num-input" value="10">
+             <input type="number" class="input page-num-input" value="10" onchange="this.value = Math.floor(Math.max(this.value,1))">
         </div>
         <h3 class="content-headline">
             Results
@@ -40,15 +40,17 @@
         <div class="results-container"></div>
         <div class="pagination">
             <button class="button previous-button">previous</button>
-            <input type="number" class="pagination-input" value="1">
+            <input type="number" class="pagination-input" value="1" onchange="this.value = Math.floor(Math.max(this.value,1))">
             <button class="button next-button">next</button>
 
         </div>
         </div>
+        <div class="favorites-tab-container hide-section">
+            <h2>hello world</h2>
+        </div>
 
     </main>
     <footer>
-
         
     </footer>
     
