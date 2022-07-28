@@ -80,6 +80,21 @@ main{
 .fav-item{
     width: 90%;
     display: flex;
+    margin: auto;
+    margin-bottom: 20px;
+    height: fit-content;
+    padding: 10px;
+    border: 1px solid #3D3e40;
+    border-radius: 5px;
+    justify-content: space-between;
+}
+.fav-item h3{
+    font-size: 49px;
+    margin-right: 5%;
+}
+.fav-item img{
+    width: 20vw;
+    height: 20vw;
 }
 .item-h{
     font-size: 28px;

@@ -176,7 +176,62 @@ addContent =async (storageData) => {
 for (let i = 0; i < storageData.length; i++) {
   favsContentBox.innerHTML += `
   <div class="fav-item"><img src="${storageData[i].avatar_url}"
-   alt="" class="item-img"><p>${storageData[i].login}</p></div>`;
+   alt="" class="item-img">
+   <div>
+   <h3>${storageData[i].login}</h3>
+   <a href="${storageData[i].html_url}"> see account</a>
+    <button class="repos-button button
+             item-button" onClick="showRepos(this.value,
+               this.id)"
+             id="${storageData[i].login}"
+             value="${storageData[i].repos_url}"
+             >see repos</button>
+                          <div class="popup" id="pop${storageData[i].id}">
+
+             </div>
+ 
+    </div>
+   </div>`;
+  showRepos = async (repos, login) => {
+    const popUp = document.querySelector(`#pop${storageData[i].id}`);
+    const URL = `${repos}`;
+    const response = await fetch(URL).then((response) =>
+      response.json()).then((data) => data);
+    console.log(response);
+
+    popUp.innerHTML = ``;
+    console.log(popUp);
+    popUp.classList.add('show');
+    popUp.innerHTML += `<h3 class="popup-headline">
+             repositories of ${login}</h3>
+             <img class="pop-close-btn" id="id${storageData[i].id}"
+             src="./media/close.png" alt=""
+             style="width:20px;height:20px">
+             `;
+    for (let i = 0; i < response.length; i++) {
+      popUp.innerHTML+= `
+          <div class="repos-item">
+          <div class="repos-headline">
+          <h4>${response[i].name}</h4>
+          <p class="repos-date"> created ${response[i].created_at}</p>
+          </div>
+          <div class="repos-text-box">
+          <p> main language: 
+          ${response[i].language ? response[i].language: ''}<p>
+          <a href="${response[i].html_url}" target="_blank">see repository</a>
+          </div>
+          </div>
+       `;
+    }
+    if (response.length == 30) {
+      popUp.innerHTML+= `<a href="https://github.com/${login}?tab=repositories">see all</a>`;
+    }
+    console.log(popUp.classList);
+    const closeBtn = document.querySelector(`#id${storageData[i].id}`);
+    closeBtn.addEventListener('click', function() {
+      popUp.classList.remove('show');
+    });
+  };
 };
 // this section is for sending a fetch request to Github API
 
