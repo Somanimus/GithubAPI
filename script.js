@@ -2,41 +2,45 @@
 const contentDisplay = document.querySelector('.results-container');
 // this is for a main container
 
+const storageData = JSON.parse(localStorage.getItem('favsArr')) || [];
+const favsContentBox = document.querySelector('.favs-content-box');
+console.log(storageData)
+;
 // the next section exists to read enter input from a bunch of input tags
 
 document.querySelector('.search-input').onkeydown = function(e) {
   if (e.keyCode == 13) {
     document.querySelector('.pagination-input').value = 1;
-    addContent();
+    addContent(storageData);
   }
 };
 document.querySelector('.previous-button').onclick = function(e) {
   const val = document.querySelector('.pagination-input').value;
-  addContent();
+  addContent(storageData);
   if (val < 1) val = 1; // minimum is 1
   else val = Math.floor(val); // only integers allowed
 };
 document.querySelector('.page-num-input').onkeydown = function(e) {
   if (e.keyCode == 13) {
-    addContent();
+    addContent(storageData);
   }
 };
 document.querySelector('.next-button').onclick = function(e) {
   const num = parseInt(1);
   const num2 = parseInt(document.querySelector('.pagination-input').value);
   document.querySelector('.pagination-input').value = num2 + num;
-  addContent();
+  addContent(storageData);
 };
 document.querySelector('.pagination-input').onkeydown = function(e) {
   if (e.keyCode == 13) {
-    addContent();
+    addContent(storageData);
   }
 };
 document.querySelector('.sorter-select').onchange = function() {
-  addContent();
+  addContent(storageData);
 };
 document.querySelector('.order-select').onchange = function() {
-  addContent();
+  addContent(storageData);
 };
 
 // this section is for changing tabs
@@ -59,15 +63,42 @@ favoritesButton.addEventListener('click', function a() {
   searchSection.classList.add('hide-section');
 });
 
-
 // this section renders results of search
-addContent =async () => {
+
+addContent =async (storageData) => {
   contentDisplay.innerHTML = ``;
   const dataArr =await gitFetchRequest().then((data)=>data.items);
   console.log(dataArr);
+
+  localStorageFunction = (id, login) => {
+    if (localStorage.getItem('favsArr') == null) {
+      const selectedObject = dataArr.find((o) => o.id == id);
+      const localData = [];
+      localData[0] = selectedObject;
+      localStorage.setItem('favsArr', JSON.stringify(localData));
+      const calledButton = document.querySelector(`#${login}`);
+      calledButton.disabled = true;
+      calledButton.innerHTML = 'in favorites';
+    } else {
+      const selectedObject = dataArr.find((o) => o.id == id);
+      const storedTestData = JSON.parse(localStorage.getItem('favsArr'));
+      storedTestData.push(selectedObject);
+      localStorage.setItem('favsArr', JSON.stringify(storedTestData));
+      const calledButton = document.querySelector(`#${login}`);
+      calledButton.disabled = true;
+      calledButton.innerHTML = 'in favorites';
+    }
+
+
+    // // const localData = [];
+    // localData[0] = selectedObject;
+    // const storedTestData = JSON.parse(localStorage.getItem('testValue'));
+    // storedTestData.push(selectedObject);
+    // localStorage.setItem('favsArr', JSON.stringify(storedTestData));
+  };
   for (let i = 0; i < dataArr.length; i++) {
     contentDisplay.innerHTML += `
-       <div class="content-item">
+       <div class="content-item" id="d${dataArr[i].id}">
           <img src="${dataArr[i].avatar_url}" class='item-img' alt="">
              <div class="item-text-box">
               <h3 class="item-h">
@@ -75,12 +106,25 @@ addContent =async () => {
               </h3>
             <a href="${dataArr[i].html_url}"
              class="account-link" target="_blank">see account</a>
-             <button class="repos-button" onClick="showRepos(this.value,
+             <button class="repos-button button
+             item-button" onClick="showRepos(this.value,
                this.id)"
              id="${dataArr[i].login}"
              value="${dataArr[i].repos_url}"
              >
              See Repositories</button>
+             ${storageData.find((o) => o.id == dataArr[i].id) ?
+               `<button class="favorites-button button item-button" disabled>
+                in favorites 
+               </button>` :
+               `<button class="favorites-button button item-button"
+               id="m${dataArr[i].id}" 
+               onClick="localStorageFunction(this.value, this.id)"
+               value="${dataArr[i].id}">
+               add to favorites
+               </button>`}
+                       
+             
              </div>
              <div class="popup" id="pop${dataArr[i].id}">
 
@@ -129,8 +173,13 @@ addContent =async () => {
     };
   };
 };
-
+for (let i = 0; i < storageData.length; i++) {
+  favsContentBox.innerHTML += `
+  <div class="fav-item"><img src="${storageData[i].avatar_url}"
+   alt="" class="item-img"><p>${storageData[i].login}</p></div>`;
+};
 // this section is for sending a fetch request to Github API
+
 gitFetchRequest = async () => {
   const query = document.querySelector('.search-input').value;
   const itemAmount = document.querySelector('.page-num-input').value;
@@ -146,12 +195,7 @@ gitFetchRequest = async () => {
 };
 
 const testBtn = document.querySelector('#test-button');
-const testInput = document.querySelector('#test-input');
 testBtn.addEventListener('click', function() {
-  const localData = [];
-  localData[0] = testInput.value;
-  const storedTestData = JSON.parse(localStorage.getItem('testValue'));
-  storedTestData.push(testInput.value);
-  localStorage.setItem('testValue', JSON.stringify(storedTestData));
-  // localStorage.setItem('testValue', JSON.stringify(localData));
+  console.log('hello');
 });
+
