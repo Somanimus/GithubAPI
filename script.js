@@ -15,10 +15,12 @@ document.querySelector('.search-input').onkeydown = function(e) {
   }
 };
 document.querySelector('.previous-button').onclick = function(e) {
-  const val = document.querySelector('.pagination-input').value;
-  addContent(storageData);
-  if (val < 1) val = 1; // minimum is 1
-  else val = Math.floor(val); // only integers allowed
+  if (document.querySelector('.pagination-input').value == 1) {
+    return;
+  } else {
+    document.querySelector('.pagination-input').value -= 1;
+    addContent(storageData);
+  }
 };
 document.querySelector('.page-num-input').onkeydown = function(e) {
   if (e.keyCode == 13) {
@@ -68,8 +70,11 @@ favoritesButton.addEventListener('click', function a() {
 addContent =async (storageData) => {
   contentDisplay.innerHTML = ``;
   const dataArr =await gitFetchRequest().then((data)=>data.items);
-  console.log(dataArr);
+  console.log(dataArr.length);
 
+  if (dataArr.length == 0) {
+    contentDisplay.innerHTML += `<p class="no-entry">no user found<p>`;
+  }
   localStorageFunction = (id, login) => {
     if (localStorage.getItem('favsArr') == null) {
       const selectedObject = dataArr.find((o) => o.id == id);
@@ -131,6 +136,7 @@ addContent =async (storageData) => {
              </div>
        </div>
         `;
+
     showRepos = async (repos, login) => {
       const popUp = document.querySelector(`#pop${dataArr[i].id}`);
       const URL = `${repos}`;
@@ -163,7 +169,10 @@ addContent =async (storageData) => {
        `;
       }
       if (response.length == 30) {
-        popUp.innerHTML+= `<a href="https://github.com/${login}?tab=repositories">see all</a>`;
+        popUp.innerHTML+= `<a class="repos-link" href="https://github.com/${login}?tab=repositories">see all</a>`;
+      }
+      if (response.length == 0) {
+        popUp.innerHTML+= `<p class="no-entry">no repositories found<p>`;
       }
       console.log(popUp.classList);
       const closeBtn = document.querySelector(`#id${dataArr[i].id}`);
@@ -176,8 +185,10 @@ addContent =async (storageData) => {
 for (let i = 0; i < storageData.length; i++) {
   favsContentBox.innerHTML += `
   <div class="fav-item"><img src="${storageData[i].avatar_url}"
-   alt="" class="item-img">
-   <div>
+   alt="" class="item-img fav-avatar">
+   <img src="./media/close.png" alt="" class="favs-close-btn"
+    id="${storageData[i].login}" onClick="removeItem(this.id)">
+   <div class="fav-item-text-box ">
    <h3>${storageData[i].login}</h3>
    <a href="${storageData[i].html_url}"> see account</a>
     <button class="repos-button button
@@ -186,12 +197,45 @@ for (let i = 0; i < storageData.length; i++) {
              id="${storageData[i].login}"
              value="${storageData[i].repos_url}"
              >see repos</button>
-                          <div class="popup" id="pop${storageData[i].id}">
 
-             </div>
- 
     </div>
+        <div class="popup" id="pop${storageData[i].id}">
+
+        </div>
+ 
    </div>`;
+  removeItem = (id) => {
+    const item = storageData.findIndex((o) => o.login == id);
+    storageData.splice(item, 1);
+    const localStorageData = JSON.parse(localStorage.getItem('favsArr'));
+    localStorageData.splice(item, 1);
+    localStorage.setItem('favsArr', JSON.stringify(localStorageData));
+    console.log(localStorageData);
+    favsContentBox.innerHTML = ``;
+    for (let i = 0; i < storageData.length; i++) {
+      favsContentBox.innerHTML += `
+  <div class="fav-item"><img src="${storageData[i].avatar_url}"
+   alt="" class="item-img fav-avatar">
+   <img src="./media/close.png" alt="" class="favs-close-btn"
+    id="${storageData[i].login}" onClick="removeItem(this.id)">
+   <div class="fav-item-text-box ">
+   <h3>${storageData[i].login}</h3>
+   <a href="${storageData[i].html_url}"> see account</a>
+    <button class="repos-button button
+             item-button" onClick="showRepos(this.value,
+               this.id)"
+             id="${storageData[i].login}"
+             value="${storageData[i].repos_url}"
+             >see repos</button>
+
+    </div>
+        <div class="popup" id="pop${storageData[i].id}">
+
+        </div>
+ 
+   </div>`;
+    }
+  };
   showRepos = async (repos, login) => {
     const popUp = document.querySelector(`#pop${storageData[i].id}`);
     const URL = `${repos}`;
@@ -224,8 +268,12 @@ for (let i = 0; i < storageData.length; i++) {
        `;
     }
     if (response.length == 30) {
-      popUp.innerHTML+= `<a href="https://github.com/${login}?tab=repositories">see all</a>`;
+      popUp.innerHTML+= `<a class="repos-link" href="https://github.com/${login}?tab=repositories">see all</a>`;
     }
+    if (response.length == 0) {
+      popUp.innerHTML+= `<p class="no-entry">no repositories found<p>`;
+    }
+
     console.log(popUp.classList);
     const closeBtn = document.querySelector(`#id${storageData[i].id}`);
     closeBtn.addEventListener('click', function() {
@@ -248,9 +296,4 @@ gitFetchRequest = async () => {
 
   return response;
 };
-
-const testBtn = document.querySelector('#test-button');
-testBtn.addEventListener('click', function() {
-  console.log('hello');
-});
 

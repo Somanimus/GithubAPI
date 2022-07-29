@@ -90,9 +90,42 @@ main{
 }
 .fav-item h3{
     font-size: 49px;
-    margin-right: 5%;
 }
-.fav-item img{
+.fav-item-text-box{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px 0 10px 0;
+    align-items: center;
+
+}
+.fav-item-text-box a {
+font-size: 36px;
+text-decoration: none;
+color: #3D3e40;
+width: 80%;
+text-align: center;
+border: 1px solid #3D3e40;
+border-radius: 5px;
+}
+.fav-item-text-box button{
+    font-size: 36px;
+    color: #3D3e40;
+    height: fit-content;
+}
+.favs-close-btn{
+    position: relative;
+    width: 30px;
+    height: 30px;
+    left: calc(65% - 30px);
+}
+.no-entry{
+    color: #3D3e40;
+    font-size: 24px;
+
+}
+.fav-avatar{
     width: 20vw;
     height: 20vw;
 }
@@ -150,7 +183,7 @@ main{
 .popup{
     width: 50%;
     height: 40vh;
-    position: absolute;
+    position: fixed;
     cursor: pointer;
     top: 20%;
     left: 25%;
@@ -213,4 +246,188 @@ main{
 .page-num-input{
     width: 10%;
     margin-right: 5%;
+}
+@media screen and (max-width: 700px) {
+   header{
+    height: 60px;
+   } 
+   .header-buttons{
+    width: 50%;
+    margin-left: 10%;
+   }
+   .header-buttons button{
+    width: 40%;
+   }
+   header h1{
+    width: 40%;
+   }
+   .main-headline{
+    margin: auto;
+    text-align: center;
+   }
+   .sorter-form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+   }
+   .sorter-form *{
+    width: 50%;
+    height: 30px;
+    margin: 0;
+    margin-bottom: 5px;
+   }
+   .content-headline{
+    margin: 0;
+    text-align: center;
+    margin-bottom: 20px;
+   }
+   .results-container{
+    flex-direction: column;
+    align-items: center;
+   }
+   .content-item{
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: fit-content;
+    width: 80%;
+    margin-bottom: 20px;
+    padding-bottom: 5px;
+    border-bottom: 2px solid #3D3e40;
+   }
+   .item-img{
+    width: 80%;
+    height: auto;
+   }
+   .item-text-box{
+    width: 80%;
+   }
+   .item-text-box *{
+    width: 80%;
+    margin: auto;
+   }
+   .repos-button{
+    margin-bottom: 5px;
+   }
+   .pagination{
+    position: inherit;
+    justify-content: center;
+   }
+   .previous-button{
+    margin-right: 5px;
+   }
+   .next-button{
+    margin: 0;
+    margin-left: 5px;
+   }
+   .repos-item{
+    flex-direction: column;
+    margin-bottom: 0;
+    height: fit-content;
+   }
+   .repos-link{
+    display: inline-block;
+    margin: auto;
+    width: 100%;
+    text-align: center;
+   }
+   .repos-headline{
+    width: 80%;
+    flex-direction: column;
+    height: fit-content;
+   }
+   .repos-headline h4{
+    width: 100%;
+    overflow: scroll;
+   }
+   .repos-date{
+    height: fit-content;
+    width: 100%;
+    display: none;
+   }
+   .repos-text-box{
+    height: fit-content;
+    padding-bottom: 10px ;
+   }
+   .fav-item{
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+   }
+   .fav-avatar{
+    margin: auto;
+   }
+   .fav-item-text-box{
+    width: 90%;
+   }
+   .fav-item-text-box h3{
+    font-size: 30px;
+   }
+   .fav-item-text-box a{
+    margin-bottom: 10px;
+   }
+   .favs-close-btn{
+    position: absolute;
+    left: calc(98% - 7vw);
+    bottom: 90%;
+    width: 7vw;
+    height: 7vw;
+   }
+
+
+}
+@media screen and (max-width: 380px) {
+    header h1{
+        margin: 0;
+        margin-right: 5px;
+        font-size: 20px;
+    }
+    header{
+        justify-content: center;
+    }
+    .header-buttons{
+        height: 100%;
+        align-items: center;
+        display: flex;
+        margin: 0;
+        justify-content:flex-end ;
+    }
+    .search-button{
+        margin-right: 10%;
+    }
+    
+    
+    
+}
+@media screen and (min-width: 701px) and (max-width: 1000px) {
+    .content-item{
+        width: 80%;
+    }
+    .item-img{
+        width: 40%;
+        height: auto;
+    }
+    .pagination{
+    position: inherit;
+    justify-content: center;
+   }
+   .repos-headline{
+    width: 80%;
+    flex-direction: column;
+    height: fit-content;
+   }
+   .repos-headline h4{
+    width: 100%;
+    overflow: scroll;
+   }
+   .pagination * {
+    margin: 0;
+   }
+   .previous-button{
+    margin-right: 5px;
+   }
+   .next-button{
+    margin-left: 5px;
+   }
 }
